@@ -11,7 +11,7 @@ const getDirectories = (source, isDirectory) =>
 
 
 const host = '0.0.0.0';
-const http_port = process.env.PORT || 5000;
+const http_port = process.env.PORT || 80;
 const app = express();
 
 app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
