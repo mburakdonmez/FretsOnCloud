@@ -1,3 +1,8 @@
+/**
+ * @file Frets On Cloud
+ * @author Mehmet Burak Dönmez
+ */
+
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
