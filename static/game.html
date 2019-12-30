@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MBD Assignment 5</title>
+    <script src="/jquery.min.js"></script>
+    <script src="/midi.js"></script>
+    <script src="/three.js"></script>
+    <script src="/threejs_init.js"></script>
+    <script src="/three_game.js"></script>
+    <script src="/game_menu.js"></script>
+    <script src="./GLTFLoader.js"></script>
+    <script src="./orbitControls.js"></script>
+    <script src="./stats.module.js"></script>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .gamePointDiv {
+            position: absolute;
+            color: red;
+            width: 100%;
+            font-size: 75px;
+            text-align: center;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="gamePointDiv" class="gamePointDiv">x1 (0) 0 pts</div>
+</body>
+<script>
+    $(document).ready(() => {
+        var url = new URL(window.location.href);
+        initGame(url.searchParams.get("song"));
+    })
+</script>
+
+</html>
