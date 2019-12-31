@@ -6,10 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MBD A5 MENU</title>
-    <script src="./jquery.min.js"></script>
+    <script src="/jquery.min.js"></script>
 </head>
 
 <body>
+    <div>
+        This project implements the project frets on fire (fofix) that is built with python, in webgl-three.js. (frets
+        on fire: https://github.com/fofix/fofix) <br><br>
+        How to play: <br>
+        First, select a song from the list below. After selecting the song you will be asked for a track. <br>
+        Not all of the tracks are playeble yet, so I recommend you to select one of the "PART GUITAR" or "PART BASS" if
+        available, <br>
+        if they are not available then unfortunately you need to try each one. When you selected the track if there is a
+        level selection then the track is probably playable.<br>
+        So finally when you select the level the game starts immediately. <br>
+        At the level selecting step I recommend to take the keyboard and use "TAB" for level selection and enter for
+        clicking, so that way you will be ready when you have selected the level. <br> <br>
+        In game: <br><br>
+        Pick up the keyboard as shown in the image <br><br>
+        <img src="/fofix_how_to_play.jpg" alt="keyboard holding figure">
+        <br>
+        and use keys: "F1", "F2", "F3", "F4", "F5" for notes and keys "Enter" and "Right Shift" for pena hits. <br>
+        You need to press to the correct note key(s) and while the note is down you need yo hit one of the pena keys to
+        achieve the "hit"
+        <br>
+        PS: When the song ends nothing happens, the base just keeps rotating, sooo there is that
+        <br><br>
+        Last but not least:<br>
+        With great combo comes great points
+    </div>
+    <br>
+    <br>
+    <br>
+    <div>
+        Songs:
+    </div>
     <ul id="songsContainer"></ul>
     <script>
         $(document).ready(() => $.ajax({
