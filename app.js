@@ -27,10 +27,6 @@ app.use(bodyParser.json({ limit: '25mb' }));
 app.set('json escape', true);
 app.use(express.static('static'));
 
-if (process.env.NODE_ENV == 'production') {
-    app.enable('trust proxy');
-}
-
 app.use((req, res, next) => {
     console.log(`[${new Date()}] ${req.connection.remoteAddress}|${req.method}|${req.originalUrl}`);
     next();
