@@ -1,8 +1,8 @@
 By Mehmet Burak Dönmez
 16050111016
 
-This project implements the project fofix that is built with python, in webgl-three.js. (fofix: https://github.com/fofix/fofix)
-In theory any song available for fofix, works with this project too, but not all of them are tested.
+This project implements the project frets on fire (fofix) that is built with python, in webgl-three.js. (frets on fire: https://github.com/fofix/fofix)
+In theory any song available for frets on fire, works with this project too, but not all of them are tested.
 
 A demo is available at "fretsoncloud.com"
 
