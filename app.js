@@ -70,10 +70,6 @@ app.get('/mistakeSounds', (req, res) => {
     res.json(getDirectories('static/sounds/mistakes', false));
 })
 
-/*http.createServer(app).listen(http_port, () => {
-    console.log(`Server is running at http://${host}:${http_port}`);
-});*/
-
 http.createServer(app).listen(http_port, () => {
     console.log(`Server is redirecting http://${host}:${http_port} to https://${host}:${https_port}`);
 });
