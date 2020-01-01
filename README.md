@@ -1,6 +1,12 @@
 By Mehmet Burak Dönmez
 16050111016
 
+The complete project is available at https://github.com/mburakdonmez/FretsOnCloud/  (direct download: https://codeload.github.com/mburakdonmez/FretsOnCloud/zip/master)
+
+Master branch requires ssl keys so I recommend the no-ssl branch for local deployment https://github.com/mburakdonmez/FretsOnCloud/tree/no-ssl (direct download: https://codeload.github.com/mburakdonmez/FretsOnCloud/zip/no-ssl)
+
+
+
 This project implements the project frets on fire (fofix) that is built with python, in webgl-three.js. (frets on fire: https://github.com/fofix/fofix)
 In theory any song available for frets on fire, works with this project too, but not all of them are tested.
 
