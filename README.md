@@ -10,7 +10,7 @@ Master branch requires ssl keys so I recommend the no-ssl branch for local deplo
 This project implements the project frets on fire (fofix) that is built with python, in webgl-three.js. (frets on fire: https://github.com/fofix/fofix)
 In theory any song available for frets on fire, works with this project too, but not all of them are tested.
 
-A demo is available at "fretsoncloud.com"
+A demo is available at "[fretsoncloud.com](https://fretsoncloud.com)"
 
 In order to run this project npm is required (12.14.0 is recommended).
 A dedicated GPU is also recommended for better performance
