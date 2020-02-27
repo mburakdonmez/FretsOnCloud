@@ -116,8 +116,6 @@ const initScene = (cb = () => { }) => {
     renderer.setClearColor(0xe5e5e5)
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.update();
 
     planeTexture = new THREE.TextureLoader().load('/textures/texture1.png', (t) => {
         t.wrapS = t.wrapT = THREE.RepeatWrapping;
@@ -192,7 +190,6 @@ const initScene = (cb = () => { }) => {
 const animate = function () {
     requestAnimationFrame(animate);
     gameRender(new Date());
-    controls.update();
     stats.update();
     renderer.render(scene, camera);
 };
