@@ -513,7 +513,7 @@ function createEventListeners() {
         }
     }, { passive: false })
 }
-let a = null;
+
 function getCurrentSecond() {
     return (currentTime - gameStartTime) / 1000;
 }
