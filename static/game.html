@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MBD Assignment 5</title>
+    <title>Frets On Cloud</title>
     <script src="/jquery.min.js"></script>
     <script src="/midi.js"></script>
     <script src="/three.js"></script>
@@ -13,18 +13,17 @@
     <script src="/three_game.js"></script>
     <script src="/game_menu.js"></script>
     <script src="./GLTFLoader.js"></script>
-    <script src="./orbitControls.js"></script>
     <script src="./stats.module.js"></script>
     <style>
         body {
             margin: 0;
             height: 100vh;
         }
-
+        
         canvas {
             display: block;
         }
-
+        
         .gamePointDiv {
             position: absolute;
             color: red;
@@ -33,17 +32,57 @@
             text-align: center;
             pointer-events: none;
         }
+        
+        .notesdiv {
+            position: absolute;
+            color: blue;
+            top: 15%;
+            left: 15%;
+            font-size: 80px;
+        }
+        
+        @media only screen and (max-width: 768px) {
+            /* For mobile phones: */
+            .gamePointDiv {
+                position: absolute;
+                color: red;
+                width: 100%;
+                font-size: 25px;
+                text-align: center;
+                pointer-events: none;
+            }
+            .notesdiv {
+                position: absolute;
+                color: blue;
+                top: 15%;
+                left: unset;
+                float: right;
+                font-size: 25px;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div id="gamePointDiv" class="gamePointDiv">x1 (0) 0 pts</div>
+    <div id="gamePointDiv" class="gamePointDiv"></div>
+    <div id="notesdiv" class="notesdiv"></div>
+    <script>
+        $(document).ready(() => {
+            var url = new URL(window.location.href);
+            initGame(url.searchParams.get("song"));
+        })
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-155622063-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-155622063-1');
+    </script>
+
 </body>
-<script>
-    $(document).ready(() => {
-        var url = new URL(window.location.href);
-        initGame(url.searchParams.get("song"));
-    })
-</script>
 
 </html>

@@ -91,15 +91,7 @@ const writePoints = (text_here) => {
 }
 
 const initScene = (cb = () => { }) => {
-    text = document.createElement('div');
-    text.style.position = 'absolute';
-    text.style.width = 100;
-    text.style.height = 100;
-    text.style.color = "blue";
-    text.style.top = 15 + '%';
-    text.style.left = 15 + '%';
-    text.style['font-size'] = 80 + 'px';
-    document.body.appendChild(text);
+    text = document.getElementById('notesdiv');
 
     stats = new Stats();
     document.body.appendChild(stats.dom);
@@ -116,8 +108,6 @@ const initScene = (cb = () => { }) => {
     renderer.setClearColor(0xe5e5e5)
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.update();
 
     planeTexture = new THREE.TextureLoader().load('/textures/texture1.png', (t) => {
         t.wrapS = t.wrapT = THREE.RepeatWrapping;
@@ -192,7 +182,6 @@ const initScene = (cb = () => { }) => {
 const animate = function () {
     requestAnimationFrame(animate);
     gameRender(new Date());
-    controls.update();
     stats.update();
     renderer.render(scene, camera);
 };
