@@ -195,7 +195,6 @@ function hitNote(note) {
 }
 
 function addScoreBoardColor(hex_color) {
-    //FIXME
     let { r, g, b } = hexToRgb(hex_color);
     let pick = Math.floor(Math.random() * 3);
     if (r) {
@@ -393,11 +392,9 @@ function hitPena(keyId, state) {
                     }
                 } else {
                     wrongPena();
-                    //TODO wrong press (keep in mind the fast hits)
                 }
             } else {
                 wrongPena();
-                //TODO wrong press (keep in mind the fast hits)
             }
         } else {
 
