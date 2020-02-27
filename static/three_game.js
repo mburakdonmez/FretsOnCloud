@@ -403,6 +403,41 @@ function hitPena(keyId, state) {
 
 }
 
+function get_next_notes() {
+    let next_notes = [currentNotes[0]];
+    let noteCount = 0;
+    while (currentNotes[++noteCount] && currentNotes[noteCount].time === next_notes[0].time) {
+        next_notes.push(currentNotes[noteCount]);
+    }
+    return next_notes;
+}
+
+async function touchKey(key, state) {
+    if (states[key] !== state) {
+        states[key] = state;
+        hitBoxes[key].visible = state;
+        setHitBoxHeights(state);
+        const next_notes = get_next_notes();
+        if (next_notes.length > 0 && isNoteInHitBox(next_notes[0])) {
+            next_notes.some(v => {
+                if (noteToHitBox(v) === key) {
+                    v.state = state;
+                    return true;
+                }
+            });
+            if (next_notes.every(v => v.state === true)) {
+                for (let i = 0; i < next_notes.length; i++) {
+                    hitNote(currentNotes.shift());
+                }
+            }
+        } else {
+            if (state) {
+                wrongPena();
+            }
+        }
+    }
+}
+
 
 
 function createEventListeners() {
@@ -449,8 +484,36 @@ function createEventListeners() {
             setState('hb5', false);
         }
     };
-}
 
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const touches = {};
+
+    window.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+
+        mouse.x = +(e.changedTouches[0].pageX / window.innerWidth) * 2 + -1;
+        mouse.y = -(e.changedTouches[0].pageY / window.innerHeight) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        let intersect = raycaster.intersectObjects(scene.children).filter(v => v.object === mainObj);
+        if (intersect.length > 0) {
+            intersect = intersect[0];
+            const x_ = Math.ceil(intersect.uv.x * 5);
+            const key = `hb${x_}`
+            touches[e.changedTouches[0].identifier] = { key: key };
+            touchKey(key, true);
+        }
+    }, { passive: false });
+
+    window.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        if (touches[e.changedTouches[0].identifier]) {
+            touchKey(touches[e.changedTouches[0].identifier].key, false);
+        }
+    }, { passive: false })
+}
+let a = null;
 function getCurrentSecond() {
     return (currentTime - gameStartTime) / 1000;
 }
