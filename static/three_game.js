@@ -188,6 +188,10 @@ function hitNote(note) {
     hitBoxes[hb].material.color.set(clr);
     setTimeout(() => hitBoxes[hb].material.color.set(0xfef5ff), 500)
     writePoints(`(${combo}) ${points}/${totalNotes}`);
+
+    if (playAudio.currentTime - note.time > fastHitTimeDelta) {
+        playAudio.currentTime = note.time;
+    }
 }
 
 function addScoreBoardColor(hex_color) {
