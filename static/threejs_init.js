@@ -91,15 +91,7 @@ const writePoints = (text_here) => {
 }
 
 const initScene = (cb = () => { }) => {
-    text = document.createElement('div');
-    text.style.position = 'absolute';
-    text.style.width = 100;
-    text.style.height = 100;
-    text.style.color = "blue";
-    text.style.top = 15 + '%';
-    text.style.left = 15 + '%';
-    text.style['font-size'] = 80 + 'px';
-    document.body.appendChild(text);
+    text = document.getElementById('notesdiv');
 
     stats = new Stats();
     document.body.appendChild(stats.dom);
