@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Frets On Cloud</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <!-- <script src="/jquery.min.js"></script> -->
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-header" id="card_header">
+
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control disabled" id="email" disabled, style="cursor: not-allowed;">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Nickname</label>
+                    <input type="text" class="form-control" id="nickName" placeholder="Enter Nickname"
+                        aria-describedby="nickNameUnique" name="nickname">
+                    <small id="nickNameUnique" class="form-text text-muted alert alert-danger">Please enter a
+                        nickname</small>
+                </div>
+                <input type="submit" class="btn btn-secondary disabled" value="submit" id="submitter"
+                    style="cursor: not-allowed;" disabled />
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    let request_timer = false;
+    $('#nickName').on('input', function (e) {
+        $('#submitter').removeClass('btn-primary').addClass('btn-secondary').addClass('disabled').prop('disabled', true).css('cursor', 'not-allowed');
+        $('#nickNameUnique').removeClass('alert-danger').addClass('alert-warning').text('Checking if the nickname is available');
+        if (request_timer !== false && request_timer !== true) {
+            window.clearTimeout(request_timer);
+        }
+        if (request_timer !== true && $('#nickName').val().length > 0) {
+            request_timer = window.setTimeout(() => {
+                request_timer = true;
+                $.ajax({
+                    method: 'POST',
+                    url: '/complete/nickNameCheck',
+                    data: {
+                        nickName: $('#nickName').val()
+                    },
+                    success: (data) => {
+                        if (data.available) {
+                            $('#submitter').addClass('btn-primary').removeClass('btn-secondary').removeClass('disabled').prop('disabled', false).css('cursor', 'pointer');
+                            $('#nickNameUnique').removeClass('alert-warning').addClass('alert-success').text('Nickname is available');
+                        } else {
+                            $('#submitter').removeClass('btn-primary').addClass('btn-secondary').addClass('disabled').prop('disabled', true).css('cursor', 'not-allowed');
+                            $('#nickNameUnique').removeClass('alert-warning').addClass('alert-danger').text('Nickname is NOT available');
+                        }
+                        request_timer = false;
+                    }
+                })
+            }, 500);
+        }
+        if ($('#nickName').val().length === 0) {
+            $('#nickNameUnique')
+                .removeClass('alert-warning')
+                .removeClass('alert-success')
+                .removeClass('alert-danger')
+                .addClass('alert-danger')
+                .text('Please enter a nickname');
+            $('#submitter').removeClass('btn-primary').addClass('btn-secondary').addClass('disabled').prop('disabled', true).css('cursor', 'not-allowed');
+        }
+    });
+
+    $(document).ready(function () {
+        $.ajax({
+            method: 'GET',
+            url: '/complete/whoami',
+            success: (data) => {
+                $('#card_header').text(`Welcome ${data.fullName}, please select a nickname to continue. (Everyone will see you by this nickname)`);
+                $('#email').val(data.email).change();
+            }
+        })
+    })
+</script>
+
+</html>

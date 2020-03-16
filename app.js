@@ -6,9 +6,14 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
+const passport = require('passport');
+const flash = require('connect-flash');
+const mongoose_conn = require('./models/connection').conn;
 
 const getDirectories = (source, isDirectory) =>
     fs.readdirSync(source, { withFileTypes: true })
@@ -23,6 +28,23 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
 app.use(bodyParser.json({ limit: '25mb' }));
+app.use(session({
+    secret: "secretKey",
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        secure: false,
+        httpOnly: true
+    },
+    store: new MongoStore({
+        mongooseConnection: mongoose_conn,
+        collection: 'sessions',
+        stringify: false
+    })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 app.use(function (req, res, next) {
     if (!req.secure)
@@ -37,6 +59,9 @@ app.use((req, res, next) => {
     console.log(`[${new Date()}] ${req.connection.remoteAddress}|${req.method}|${req.originalUrl}`);
     next();
 })
+
+app.use('/auth', require('./routes/auth'));
+app.use('/complete', require('./routes/complete_register'));
 
 app.get('/ping', (req, res) => {
     res.end("pong");
