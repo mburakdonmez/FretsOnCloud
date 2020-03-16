@@ -239,7 +239,6 @@ function addScoreBoardColor(hex_color) {
 }
 
 function setScoreBoardColor() {
-    //r
     sc_light.forEach((lt, index) => {
         let r_passed = currentTime - colorTimes[index].r;
         if (r_passed <= colorTimeOut) {

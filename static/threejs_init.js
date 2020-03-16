@@ -155,7 +155,6 @@ const initScene = (cb = () => { }) => {
 
     let gltfloader = new THREE.GLTFLoader();
     gltfloader.load('objects/discoball/out.glb', (gltf) => {
-        console.log('gltf', gltf);
         scoreBoard = gltf.scene;
         scoreBoard.position.set(...sc_position);
         scene.add(scoreBoard);

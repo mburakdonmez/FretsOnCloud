@@ -47,7 +47,6 @@
             method: 'GET',
             url: '/allSongs',
             success: response => {
-                console.log(response)
                 for (let i = 0; i < response.length; i++) {
                     const v = response[i];
                     $('<li />').append($('<a />').attr('href', '#').text(v).click(() => {
