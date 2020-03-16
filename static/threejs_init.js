@@ -96,12 +96,16 @@ const initScene = (cb = () => { }) => {
     stats = new Stats();
     document.body.appendChild(stats.dom);
 
-
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
-
-
+    sc_position = [0, 6, -6.5];
+    if (screen.width > 512) { //to fit the scene
+        camera.position.z = 5;
+    } else {
+        sc_position = [0, 8, -6.5]
+        camera.position.z = 7;
+        camera.position.y = 2;
+    }
 
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -121,13 +125,10 @@ const initScene = (cb = () => { }) => {
     mainObj.rotation.x = 0.5;
     scene.add(mainObj);
 
-
-
     mainObj.add(createLine(-1.5));
     mainObj.add(createLine(-0.5));
     mainObj.add(createLine(0.5));
     mainObj.add(createLine(1.5));
-
 
     mainObj.add(createHitBox(-2, 'hb1'));
     mainObj.add(createHitBox(-1, 'hb2'));
@@ -147,7 +148,7 @@ const initScene = (cb = () => { }) => {
     gltfloader.load('objects/discoball/out.glb', (gltf) => {
         console.log('gltf', gltf);
         scoreBoard = gltf.scene;
-        scoreBoard.position.set(0, 6, -6.5);
+        scoreBoard.position.set(...sc_position);
         scene.add(scoreBoard);
 
         let temp_light = new THREE.PointLight(0x000000, 3, 3, 1);
@@ -167,7 +168,7 @@ const initScene = (cb = () => { }) => {
 
 
         cb();
-    }, (xhr) => console.log(`object is ${(xhr.loaded / xhr.total * 100)}% loaded`))
+    })
 
     window.onresize = function () {
         renderer.setSize(window.innerWidth, window.innerHeight);
