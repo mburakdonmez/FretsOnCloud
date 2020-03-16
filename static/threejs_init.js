@@ -101,10 +101,19 @@ const initScene = (cb = () => { }) => {
     sc_position = [0, 6, -6.5];
     if (screen.width > 512) { //to fit the scene
         camera.position.z = 5;
-    } else {
-        sc_position = [0, 8, -6.5]
+    } else if (screen.width >= 400) {
+        sc_position = [0, 8, -6.5];
         camera.position.z = 7;
         camera.position.y = 2;
+    } else if (screen.width >= 350) {
+        sc_position = [0, 8, -6.5];
+        camera.position.z = 7.5;
+        camera.position.y = 2.5;
+    } else {
+        alert("Coution! This device is too narrow to play this game, please play on a wider screen");
+        sc_position = [0, 8, -6.5];
+        camera.position.z = 7.5;
+        camera.position.y = 2.5;
     }
 
 
