@@ -39,6 +39,19 @@
             top: 15%;
             left: 15%;
             font-size: 80px;
+            pointer-events: none;
+        }
+
+        .countDownDiv {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            font-size: 600px;
+            color: white;
+            pointer-events: none;
         }
         
         @media only screen and (max-width: 768px) {
@@ -66,6 +79,7 @@
 <body>
     <div id="gamePointDiv" class="gamePointDiv"></div>
     <div id="notesdiv" class="notesdiv"></div>
+    <div id="countDownDiv" class="countDownDiv"></div>
     <script>
         $(document).ready(() => {
             var url = new URL(window.location.href);

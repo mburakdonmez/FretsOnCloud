@@ -99,13 +99,43 @@ function startGame(notesToSet, levelToSet) {
     writePoints(`(${combo}) ${points}/${totalNotes}`);
     createEventListeners();
 
-    gameStartTime = new Date();
+    // gameStartTime = new Date();
+    gameStartTime = new Date(Date.now() + 3000);
     sounds.forEach(s => s.play());
     refreshCurrentNotes(gameStartTime);
 
 
     gameStarted = true;
+    const countDown = (number = 3) => {
+        $('#countDownDiv').text(number).fadeIn(500, () => {
+            $('#countDownDiv').fadeOut(500, () => {
+                if (number > 1) {
+                    countDown(number - 1);
+                }
+            });
+        });
+    };
+    countDown();
     animate();
+
+}
+
+function sync_sounds(note_time = null) {
+    if (gameStartTime < currentTime) {
+        playAudio.play();
+        sounds.forEach(s => s.play());
+        if (note_time && Math.abs(note_time - playAudio.currentTime) > hitTimeDelta) {
+            playAudio.currentTime = note_time;
+            sounds.forEach(s => { s.currentTime = note_time; });
+        }
+    } else {
+        playAudio.pause();
+        playAudio.currentTime = 0;
+        sounds.forEach(s => {
+            s.currentTime = 0;
+            s.pause();
+        });
+    }
 }
 
 function initGame(songName) {
@@ -116,24 +146,24 @@ function initGame(songName) {
         success: response => {
             if (response.mid === 'notExists') {
                 alert(`The song '${songName}' does not exists`);
+                window.location.href = '/'
             } else {
                 if (response.guitar) {
                     playAudio = new Audio(`/songs/${songName}/${response.guitar}`);
-                    sounds.push(playAudio);
                 }
                 if (response.song) {
                     let ad = new Audio(`/songs/${songName}/${response.song}`);
-                    if (!playAudio) {
+                    if (!playAudio)
                         playAudio = ad;
-                    }
-                    sounds.push(ad);
+                    else
+                        sounds.push(ad);
                 }
                 if (response.rhythm) {
                     let ad = new Audio(`/songs/${songName}/${response.rhythm}`);
-                    if (!playAudio) {
+                    if (!playAudio)
                         playAudio = ad;
-                    }
-                    sounds.push(ad);
+                    else
+                        sounds.push(ad);
                 }
 
                 $.ajax({
@@ -188,10 +218,7 @@ function hitNote(note) {
     hitBoxes[hb].material.color.set(clr);
     setTimeout(() => hitBoxes[hb].material.color.set(0xfef5ff), 500)
     writePoints(`(${combo}) ${points}/${totalNotes}`);
-
-    if (playAudio.currentTime - note.time > fastHitTimeDelta) {
-        playAudio.currentTime = note.time;
-    }
+    sync_sounds(note.time);
 }
 
 function addScoreBoardColor(hex_color) {
@@ -438,8 +465,6 @@ async function touchKey(key, state) {
     }
 }
 
-
-
 function createEventListeners() {
     window.onkeydown = event => {
         if (config.pena.includes(event.keyCode)) {
@@ -518,14 +543,13 @@ function getCurrentSecond() {
     return (currentTime - gameStartTime) / 1000;
 }
 
-
-
 function gameRender(currentTimeLocal) {
     currentTime = currentTimeLocal;
     setScoreBoardColor();
     planeTexture.offset.y = getTextureOffset();
     refreshCurrentNotes();
     getPositions();
+    sync_sounds();
 }
 
 function getTextureOffset() {
@@ -583,4 +607,3 @@ function getPositions() {
         }
     }
 }
-
