@@ -189,7 +189,8 @@ const initScene = (cb = () => { }) => {
 }
 
 const animate = function () {
-    requestAnimationFrame(animate);
+    if (!gameEnded)
+        requestAnimationFrame(animate);
     gameRender(new Date());
     stats.update();
     renderer.render(scene, camera);

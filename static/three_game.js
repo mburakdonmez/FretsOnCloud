@@ -1,5 +1,6 @@
 let gameStartTime;
 let gameStarted = false;
+let gameEnded = false;
 let notes = [];
 let currentNotes = [];
 let currentTime;
@@ -28,6 +29,9 @@ const fastHitTimeDelta = hitTimeDelta / 3;
 let combo = 0;
 let points = 0;
 let totalNotes = 0;
+
+let gameDuration = 0;
+let gameDurationString = '';
 
 const positions = {
     'C': 0,
@@ -92,7 +96,7 @@ let colorValues = [
 
 let colorTimeOut = 3000; //millisecond(s)
 
-function startGame(notesToSet, levelToSet) {
+function startGame(notesToSet, levelToSet, parsed_midi_file) {
     level = levelToSet;
     notes = notesToSet;
     totalNotes = notes.length;
@@ -104,7 +108,7 @@ function startGame(notesToSet, levelToSet) {
     sounds.forEach(s => s.play());
     refreshCurrentNotes(gameStartTime);
 
-
+    set_game_duration(parsed_midi_file);
     gameStarted = true;
     const countDown = (number = 3) => {
         $('#countDownDiv').text(number).fadeIn(500, () => {
@@ -118,6 +122,10 @@ function startGame(notesToSet, levelToSet) {
     countDown();
     animate();
 
+}
+function end_game() {
+    gameEnded = true;
+    alert('game ended');
 }
 
 function sync_sounds(note_time = null) {
@@ -136,6 +144,12 @@ function sync_sounds(note_time = null) {
             s.pause();
         });
     }
+}
+
+function set_game_duration(midiFile) {
+    gameDuration = Math.max(playAudio.duration, midiFile.duration, ...sounds.map(s => s.duration)) * 1000;
+    gameDurationString = `${Math.floor(gameDuration / 60000)}:${((gameDuration % 60000) / 1000).toFixed(0) < 10 ? '0' : ''}${((gameDuration % 60000) / 1000).toFixed(0)}`;
+
 }
 
 function initGame(songName) {
@@ -542,6 +556,18 @@ function getCurrentSecond() {
     return (currentTime - gameStartTime) / 1000;
 }
 
+function setTimer(millis) {
+    if (millis > 0) {
+        if (millis > gameDuration + 3000) {
+            return end_game();
+        } else {
+            $('#timerDiv').text(`${Math.floor(millis / 60000)}:${((millis % 60000) / 1000).toFixed(0) < 10 ? '0' : ''}${((millis % 60000) / 1000).toFixed(0)}/${gameDurationString}`);
+        }
+    } else {
+        $('#timerDiv').text(`0:00/${gameDurationString}`);
+    }
+}
+
 function gameRender(currentTimeLocal) {
     currentTime = currentTimeLocal;
     setScoreBoardColor();
@@ -549,6 +575,7 @@ function gameRender(currentTimeLocal) {
     refreshCurrentNotes();
     getPositions();
     sync_sounds();
+    setTimer(currentTime - gameStartTime);
 }
 
 function getTextureOffset() {

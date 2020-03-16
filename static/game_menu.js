@@ -27,7 +27,7 @@ function showGameMenu(parsedMidiFile) {
                 });
                 notes.sort((a, b) => a.time < b.time ? -1 : (a.time === b.time ? 0 : 1));
                 ul.remove();
-                initScene(() => startGame(notes, v));
+                initScene(() => startGame(notes, v, parsedMidiFile));
             })))
         })
     }
