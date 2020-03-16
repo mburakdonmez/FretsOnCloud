@@ -28,7 +28,7 @@
             position: absolute;
             color: red;
             width: 100%;
-            font-size: 75px;
+            font-size: 3.5vw;
             text-align: center;
             pointer-events: none;
         }
@@ -38,7 +38,7 @@
             color: blue;
             top: 15%;
             left: 15%;
-            font-size: 80px;
+            font-size: 3.5vw;
             pointer-events: none;
         }
 
@@ -53,24 +53,29 @@
             color: white;
             pointer-events: none;
         }
+
+        .timerDiv {
+            position: absolute;
+            color: green;
+            pointer-events: none;
+            right: 15%;
+            top: 15%;
+            font-size: 3.5vw;
+            transform: translate(-50%);
+        }
         
-        @media only screen and (max-width: 768px) {
+        @media only screen and (max-width: 750px) {
             /* For mobile phones: */
-            .gamePointDiv {
-                position: absolute;
-                color: red;
-                width: 100%;
-                font-size: 25px;
-                text-align: center;
-                pointer-events: none;
-            }
             .notesdiv {
-                position: absolute;
-                color: blue;
-                top: 15%;
-                left: unset;
-                float: right;
-                font-size: 25px;
+                font-size: 7vw;
+            }
+
+            .gamePointDiv {
+                font-size: 7vw;
+            }
+
+            .timerDiv {
+                font-size: 7vw;
             }
         }
     </style>
@@ -80,6 +85,7 @@
     <div id="gamePointDiv" class="gamePointDiv"></div>
     <div id="notesdiv" class="notesdiv"></div>
     <div id="countDownDiv" class="countDownDiv"></div>
+    <div id="timerDiv", class="timerDiv"></div>
     <script>
         $(document).ready(() => {
             var url = new URL(window.location.href);
