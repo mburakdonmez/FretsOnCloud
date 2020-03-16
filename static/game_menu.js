@@ -33,6 +33,7 @@ function showGameMenu(parsedMidiFile) {
     }
 
     parsedMidiFile.tracks.forEach((element, index) => {
-        ul.append($('<li />').append($('<a />').text(element.name).attr('href', '#').on('click', () => __selectLevel(parsedMidiFile.tracks[index]))))
+        if (element.name.startsWith('PART'))
+            ul.append($('<li />').append($('<a />').text(element.name.split('PART ').splice(1).join(' ')).attr('href', '#').on('click', () => __selectLevel(parsedMidiFile.tracks[index]))))
     });
 }
