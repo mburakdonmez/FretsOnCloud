@@ -12,7 +12,6 @@ function showGameMenu(parsedMidiFile) {
     const __selectLevel = (track) => {
         ul.children().remove();
         let levels = new Set();  //4: easy, 5: medium, 6: hard, 7: expert
-        console.log('track', track);
         track.notes.some(note => {
             levels.add(note.octave);
             return levels.size >= 4;     //stop if all levels are detected
