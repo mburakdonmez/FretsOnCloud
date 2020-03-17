@@ -36,5 +36,5 @@ router.use((req, res, next) => {
 
 router.get('/google', passport.authenticate('google', { failureRedirect: '/login', failureFlash: true }));
 
-router.get('/google/callback', passport.authenticate('google', { failureFlash: true, failureRedirect: '/?login=false', successRedirect: '/complete' }));
+router.get('/google/callback', passport.authenticate('google', { failureFlash: true, failureRedirect: '/?login=false', successRedirect: '/complete' }), (req, res) => res.redirect('/complete'));
 
