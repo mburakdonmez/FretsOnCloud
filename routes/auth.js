@@ -17,7 +17,7 @@ passport.deserializeUser((user, done) => {
 passport.use(new GoogleStrategy({
     clientID: "120332914652-sku5s9ho058bg1fkcp0t13tkk979vkhg.apps.googleusercontent.com",
     clientSecret: "T_zBdHf92HSyhmWerSWYTOQI",
-    callbackURL: "https://fretsoncloud/auth/google/callback",
+    callbackURL: "https://fretsoncloud.com/auth/google/callback",
     scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/userinfo.email'],
     failureRedirect: '/login',
     failureFlash: true
