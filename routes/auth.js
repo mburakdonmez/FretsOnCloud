@@ -22,6 +22,7 @@ passport.use(new GoogleStrategy({
     failureRedirect: '/login',
     failureFlash: true
 }, function (accessToken, refreshToken, profile, cb) {
+    console.log('here', profile);
     models.users.find_or_create(profile, cb);
 }
 ));
