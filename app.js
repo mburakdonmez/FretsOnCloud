@@ -67,6 +67,33 @@ app.get('/ping', (req, res) => {
     res.end("pong");
 })
 
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+})
+
+app.get('/userinfo', (req, res) => {
+    if (req.user && req.user._id) {
+        if (req.user.completed && req.user.nickName) {
+            res.json({
+                user: {
+                    // email: req.user.email,
+                    // fullName: req.user.fullName,
+                    image: req.user.image,
+                    nickName: req.user.nickName,
+                    google: req.user.google,
+                    completed: req.user.completed
+                }
+
+            });
+        } else {
+            res.json({ user: { completed: req.user.completed } });
+        }
+    } else {
+        res.json({ user: false });
+    }
+})
+
 app.get('/allSongs', (req, res) => {
     res.json(getDirectories('static/songs', true));
 })

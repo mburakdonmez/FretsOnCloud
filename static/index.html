@@ -10,6 +10,8 @@
 </head>
 
 <body>
+    <div id="user_info">
+    </div>
     <div>
         This project implements the project frets on fire (fofix) that is built with python, in webgl-three.js. (frets
         on fire: https://github.com/fofix/fofix) <br><br>
@@ -43,18 +45,36 @@
     </div>
     <ul id="songsContainer"></ul>
     <script>
-        $(document).ready(() => $.ajax({
-            method: 'GET',
-            url: '/allSongs',
-            success: response => {
-                for (let i = 0; i < response.length; i++) {
-                    const v = response[i];
-                    $('<li />').append($('<a />').attr('href', '#').text(v).click(() => {
-                        window.location.href = `/song?song=${encodeURIComponent(v)}`;
-                    })).appendTo($('#songsContainer'))
+        $(document).ready(() => {
+            $.ajax({
+                method: 'GET',
+                url: '/allSongs',
+                success: response => {
+                    for (let i = 0; i < response.length; i++) {
+                        const v = response[i];
+                        $('<li />').append($('<a />').attr('href', '#').text(v).click(() => {
+                            window.location.href = `/song?song=${encodeURIComponent(v)}`;
+                        })).appendTo($('#songsContainer'))
+                    }
                 }
-            }
-        }))
+            });
+
+            $.ajax({
+                method: 'GET',
+                url: '/userinfo',
+                success: data => {
+                    if (data.user) {
+                        if (data.user.completed) {
+                            $('#user_info').text(`Welcome back ${data.user.nickName} `).append($('<a />').attr('href', '/logout').text('<Logout>'));
+                        } else {
+                            $('#user_info').append($('<a />').attr('href', '/complete').text('Complete Register'));
+                        }
+                    } else {
+                        $('#user_info').append($('<a />').attr('href', '/auth/google').text('Login with google'));
+                    }
+                }
+            })
+        })
     </script>
 </body>
 
