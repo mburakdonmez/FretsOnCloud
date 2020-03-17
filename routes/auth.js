@@ -22,7 +22,6 @@ passport.use(new GoogleStrategy({
     failureRedirect: '/login',
     failureFlash: true
 }, function (accessToken, refreshToken, profile, cb) {
-    console.log('here', profile);
     models.users.find_or_create(profile, cb);
 }
 ));
@@ -37,5 +36,7 @@ router.use((req, res, next) => {
 
 router.get('/google', passport.authenticate('google', { failureRedirect: '/login', failureFlash: true }));
 
-router.get('/google/callback', passport.authenticate('google', { failureFlash: true, failureRedirect: '/?login=false', successRedirect: '/complete' }), (req, res) => res.redirect('/complete'));
+router.get('/google/callback', (req, res, next) => {
+    passport.authenticate('google', { failureFlash: true, failureRedirect: '/?login=false', successRedirect: '/complete' }, res.redirect('/complete'))(req, res, next);
+});
 
