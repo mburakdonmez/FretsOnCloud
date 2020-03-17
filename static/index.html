@@ -17,13 +17,11 @@
         on fire: https://github.com/fofix/fofix) <br><br>
         How to play: <br>
         First, select a song from the list below. After selecting the song you will be asked for a track. <br>
-        Not all of the tracks are playeble yet, so I recommend you to select one of the "PART GUITAR" or "PART BASS" if
+        Not all of the tracks are playeble yet, so I recommend you to select one of the "GUITAR" or "BASS" if
         available, <br>
-        if they are not available then unfortunately you need to try each one. When you selected the track if there is a
+        if they are not available then unfortunately you need to try another one. After selecting the track if there is a
         level selection then the track is probably playable.<br>
-        So finally when you select the level the game starts immediately. <br>
-        At the level selecting step I recommend to take the keyboard and use "TAB" for level selection and enter for
-        clicking, so that way you will be ready when you have selected the level. <br> <br>
+        Finally when you select the level the game starts.<br><br>
         In game: <br><br>
         Pick up the keyboard as shown in the image <br><br>
         <img src="/fofix_how_to_play.jpg" alt="keyboard holding figure">
@@ -52,9 +50,7 @@
                 success: response => {
                     for (let i = 0; i < response.length; i++) {
                         const v = response[i];
-                        $('<li />').append($('<a />').attr('href', '#').text(v).click(() => {
-                            window.location.href = `/song?song=${encodeURIComponent(v)}`;
-                        })).appendTo($('#songsContainer'))
+                        $('<li />').append($('<a />').attr('href', `/song?song=${encodeURIComponent(v)}`).text(v)).appendTo($('#songsContainer'))
                     }
                 }
             });
